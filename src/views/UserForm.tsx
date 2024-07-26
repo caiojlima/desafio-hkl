@@ -4,20 +4,24 @@ import { IUser, UserSchema } from '../@types/user';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateUser } from '../api/users/useCreateUser';
 import { Navigate } from 'react-router-dom';
-import { Typography, Grid, TextField, Box, Button } from '@mui/material';
+import { Typography, Grid, TextField, Box, Button, Alert } from '@mui/material';
 
 const UserForm: React.FC = () => {
     const createUser = useCreateUser();
     const [redirect, setRedirect] = React.useState(false)
+    const [success, setSuccess] = React.useState(false)
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
       } = useForm<IUser>({ resolver: zodResolver(UserSchema) })
 
     const onSubmit: SubmitHandler<IUser> = (data) => {
       createUser.mutate(data);
+      reset();
+      setSuccess(true)
     }
 
     const toUsersList = (e: { preventDefault: () => void; }) => {
@@ -90,6 +94,9 @@ const UserForm: React.FC = () => {
         <Button variant="contained" type='submit'>Enviar</Button>
       </Box>
       <Button variant="contained" color='secondary' onClick={toUsersList}>Ver Lista</Button>
+      {success && <Box marginTop={3}>
+        <Alert severity="success">Usuário salvo com sucesso!</Alert>
+      </Box>}
       { redirect && <Navigate to="/list" /> }
     </Box>
       )
