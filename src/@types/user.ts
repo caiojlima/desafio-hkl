@@ -1,6 +1,7 @@
 import { z, ZodType } from "zod";
 
 export interface IUser {
+    id?: string;
     name: string;
     document: string;
     email: string;
@@ -18,5 +19,5 @@ export interface IUser {
 
   export type UserContextType = {
     users: IUser[];
-    saveUser: (user: IUser) => void;
+    saveUsers: (users: IUser[]) => void;
   };

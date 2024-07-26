@@ -2,18 +2,29 @@ import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IUser, UserSchema } from '../@types/user';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateUser } from '../api/users/useCreateUser';
+import { Navigate } from 'react-router-dom';
 
 const UserForm: React.FC = () => {
+    const createUser = useCreateUser();
+    const [redirect, setRedirect] = React.useState(false)
+
     const {
         register,
         handleSubmit,
         formState: { errors }
       } = useForm<IUser>({ resolver: zodResolver(UserSchema) })
 
-    const onSubmit: SubmitHandler<IUser> = (data) => console.log(data)
+    const onSubmit: SubmitHandler<IUser> = (data) => {
+      createUser.mutate(data);
+    }
+
+    const toUsersList = (e: { preventDefault: () => void; }) => {
+      e.preventDefault()
+      setRedirect(true)
+    }
 
     return (
-        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="name">Nome</label>
@@ -41,6 +52,8 @@ const UserForm: React.FC = () => {
             {errors.address && <span>{errors.address.message}</span>}
           </div>
           <input type="submit" />
+          <button onClick={toUsersList}>Lista de Usuários</button>
+          {redirect && <Navigate to="/list" />}
         </form>
       )
 }

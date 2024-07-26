@@ -1,14 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import UserProvider from './context/userContext';
-import UserForm from './components/UserForm';
+import UserProvider from './providers/userProvider';
+import QueryProvider from './providers/queryProvider';
+import { RoutingProvider } from './providers/routeProvider';
 
 function App() {
   return (
-    <UserProvider>
-      <UserForm />
-    </UserProvider>
+    <QueryProvider>
+      <UserProvider>
+        <RoutingProvider />
+      </UserProvider>
+    </QueryProvider>
   );
 }
 

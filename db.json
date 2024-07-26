@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "81ed",
+      "name": "Caio",
+      "document": "292.203.232-23",
+      "email": "caio@gmail.com",
+      "phone": "(71) 99922-3232",
+      "address": ""
+    },
+    {
+      "id": "90fb",
+      "name": "Caio",
+      "document": "292.203.232-23",
+      "email": "caio@gmail.com",
+      "phone": "(71) 99922-3232",
+      "address": ""
+    }
+  ]
+}
