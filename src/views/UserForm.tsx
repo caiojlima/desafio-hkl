@@ -4,7 +4,7 @@ import { IUser, UserSchema } from '../@types/user';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateUser } from '../api/users/useCreateUser';
 import { Navigate } from 'react-router-dom';
-import { Typography, Grid, TextField, Box, Button, Alert } from '@mui/material';
+import { Typography, Grid, TextField, Box, Button, Alert, Grow } from '@mui/material';
 
 const UserForm: React.FC = () => {
     const createUser = useCreateUser();
@@ -95,7 +95,7 @@ const UserForm: React.FC = () => {
       </Box>
       <Button variant="contained" color='secondary' onClick={toUsersList}>Ver Lista</Button>
       {success && <Box marginTop={3}>
-        <Alert severity="success">Usuário salvo com sucesso!</Alert>
+        <Grow in={success} timeout={1000}>{<Alert severity="success">Usuário salvo com sucesso!</Alert>}</Grow>
       </Box>}
       { redirect && <Navigate to="/list" /> }
     </Box>
