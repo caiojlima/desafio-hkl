@@ -4,6 +4,7 @@ import { IUser, UserSchema } from '../@types/user';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateUser } from '../api/users/useCreateUser';
 import { Navigate } from 'react-router-dom';
+import { Typography, Grid, TextField, Box, Button } from '@mui/material';
 
 const UserForm: React.FC = () => {
     const createUser = useCreateUser();
@@ -25,36 +26,72 @@ const UserForm: React.FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label htmlFor="name">Nome</label>
-            <input {...register("name")} />
-            {errors.name && <span>{errors.name.message}</span>}
-          </div>
-          <div>
-            <label htmlFor="document">CPF</label>
-            <input {...register("document")} />
-            {errors.document && <span>{errors.document.message}</span>}
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input {...register("email")} />
-            {errors.email && <span>{errors.email.message}</span>}
-          </div>
-          <div>
-            <label htmlFor="phone">Telefone</label>
-            <input {...register("phone")} />
-            {errors.phone && <span>{errors.phone.message}</span>}
-          </div>
-          <div>
-            <label htmlFor="address">Endereço</label>
-            <input {...register("address")} />
-            {errors.address && <span>{errors.address.message}</span>}
-          </div>
-          <input type="submit" />
-          <button onClick={toUsersList}>Lista de Usuários</button>
-          {redirect && <Navigate to="/list" />}
-        </form>
+      <Box
+        component="form"
+        display="flex" 
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+        marginTop={25}
+        onSubmit={handleSubmit(onSubmit)}>
+      <Typography variant="h6" gutterBottom>
+        Registro de usuário
+      </Typography>
+      <Grid container spacing={3} width={450} marginBottom={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            {...register("name")}
+            label="Nome"
+            fullWidth
+            autoComplete="given-name"
+            error={ errors.name ? true : false }
+            helperText={errors.name && errors.name?.message }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            {...register("email")}
+            label="Email"
+            fullWidth
+            autoComplete="email"
+            error={ errors.email ? true : false }
+            helperText={errors.email && errors.email?.message }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            {...register("address")}
+            label="Endereço (opcional)"
+            fullWidth
+            autoComplete="shipping address-line1"
+            error={ errors.address ? true : false }
+            helperText={errors.address && errors.address?.message }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            {...register("phone")}
+            label="Telefone"
+            fullWidth
+            autoComplete="phone"
+            error={ errors.phone ? true : false }
+            helperText={errors.phone && errors.phone?.message }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField required {...register("document")} label="CPF" fullWidth error={ errors.document ? true : false }
+            helperText={errors.document && errors.document?.message } />
+        </Grid>
+      </Grid>
+      <Box marginBottom={2}>
+        <Button variant="contained" type='submit'>Enviar</Button>
+      </Box>
+      <Button variant="contained" color='secondary' onClick={toUsersList}>Ver Lista</Button>
+      { redirect && <Navigate to="/list" /> }
+    </Box>
       )
 }
 
