@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { UserContextType, IUser } from '../@types/user';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { useUsers } from '../api/users/useUsers';
-import { useCreateUser } from '../api/users/useCreateUser';
 
 export const UserContext = React.createContext<UserContextType | null>(null);
 
